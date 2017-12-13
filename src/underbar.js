@@ -99,6 +99,36 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    var output = [];
+    var iterated = [];
+    var foundTrue = false;
+    var foundFalse = false;
+    
+    if (isSorted !== undefined && iterator !== undefined) {
+      _.each(array, function(item) {
+        iterated.push(iterator(item))
+      })
+      for (var i = 0 ; i < array.length ; i++) {
+        if (iterated[i] === true && foundTrue === false) {
+          output.push(array[i]);
+          foundTrue = true;
+        }
+        if (iterated[i] === false && foundFalse === false) {
+          output.push(array[i]);
+          foundFalse = true;
+        }
+      }
+    }
+
+    else {
+      _.each(array, function(item) {
+        if (_.indexOf(output, item) === -1) {
+          output.push(item);
+        }
+      })
+    }    
+
+    return output;
   };
 
 
