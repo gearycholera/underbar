@@ -266,6 +266,17 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+  	var args = [].slice.call(arguments);
+  	var destinationObject = args.shift();
+  	var sourceObjects = args;
+  	_.each(sourceObjects, function(obj) {
+  		_.each(obj, function(val, key){
+  			if (!destinationObject.hasOwnProperty(key)){
+  				destinationObject[key] = val;
+  			}
+  		})
+  	})
+  	return destinationObject;	
   };
 
 
