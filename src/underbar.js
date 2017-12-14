@@ -320,6 +320,20 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var memo = {}; 
+    var key = [];
+    return function() {
+      var args = Array.prototype.slice.call(arguments);
+      key = _.map(args, function (arg){
+        return arg + '(' + typeof (arg) + ')';
+      })
+      if (key in memo) {
+        return memo[key];
+      }
+      else {
+        return (memo[key] = func.apply(this, args));
+      }
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
